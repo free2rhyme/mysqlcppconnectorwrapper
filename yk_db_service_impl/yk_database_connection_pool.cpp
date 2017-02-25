@@ -43,6 +43,8 @@ YKErrorCode YKDatabaseConnectionPool::shutdown_service()noexcept(true){
 	if(m_isActive){
 		YKLockGuard<YKMutex> lock_guard(m_queue_mutex);
 		m_isActive = false;
+		YKConnetionQueueType empty;
+		m_conn_queue.swap(empty);
 		return YK_E_SUCCESSFUL;
 	}else {
 		return YK_E_GENERAL_ERROR;
