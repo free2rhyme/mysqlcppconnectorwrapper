@@ -8,9 +8,9 @@
 #include "yk_database_helper.h"
 #include "yk_database_connection_pool.h"
 
-YKErrorCode YKDatabaseHelper::prepare_statement(const YKString& sql_str, YKPreparedStatementShpType& prepared_statement_shp)noexcept(true){
+YKErrorCode YKDatabaseHelper::prepare_statement(bool is_query, const YKString& sql_str, YKPreparedStatementShpType& prepared_statement_shp)noexcept(true){
 	YKDatabaseConnectionShpType db_conn_shp;
-	YKErrorCode result_code = YKDatabaseConnectionPool::instance().bind_database_conn(db_conn_shp);
+	YKErrorCode result_code = YKDatabaseConnectionPool::instance().bind_database_conn(is_query, db_conn_shp);
 	if(result_code != YK_E_SUCCESSFUL){
 		YKLogError("couldn't get connection object");
 		return result_code;

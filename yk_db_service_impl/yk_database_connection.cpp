@@ -7,6 +7,7 @@
 #include <sstream>
 #include <mysql_driver.h>
 #include "yk_database_connection.h"
+#include "yk_database_connection_id.h"
 
 static const std::string CreateSqlUrl(const std::string& host_ip, const int32_t port, const char* protocol = "tcp"){
     std::stringstream ss;
@@ -20,12 +21,19 @@ static inline YKCppDriver* GetMySQLCppDriver(){
 
 YKDatabaseConnection::YKDatabaseConnection(YKCppConnectionShpType& cpp_conn_Shp) noexcept(true):
 		m_cpp_connection_shp(cpp_conn_Shp){
+	m_connection_id = YKDatabaseConnectionID::instance().get_next_id();
+	std::stringstream ss;
+	ss << "YKDatabaseConnection(" << m_connection_id << ") is being built" ;
+	YKLogTrace(ss.str());
 	assert(m_cpp_connection_shp);
 	//m_cpp_connection_shp->setAutoCommit(false);
 }
 
 YKDatabaseConnection::~YKDatabaseConnection()noexcept(true){
-	YKLogError("CAUTIOUS: YKDatabaseConnection is being destructed");
+	std::stringstream ss;
+	ss << "YKDatabaseConnection(" << m_connection_id << ") is being destroyed" ;
+	YKLogTrace(ss.str());
+
 	close();
 }
 

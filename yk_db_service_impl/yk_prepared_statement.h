@@ -37,6 +37,7 @@ private:
 	YKErrorCode release_database_connection() noexcept(true);
 
 private:
+	uint32_t							m_prepared_statement_id;
 	YKCppPreparedStatementShpType		m_native_prepared_statement_shp;
 	YKDatabaseConnectionShpType			m_database_connection_shp;
 

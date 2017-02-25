@@ -10,12 +10,9 @@
 
 #include <cstddef>
 #include <string>
+#include <sstream>
 
-#if __cplusplus < 201103L
-#include <boost/shared_ptr.hpp>
-#else
 #include <memory>
-#endif
 
 #ifndef noexcept
 	#if __cplusplus < 201103L
@@ -24,12 +21,6 @@
 		#else
 			#define noexcept(true) __attribute__((nothrow))
 		#endif
-	#endif
-#endif
-
-#if __cplusplus < 201103L
-	#ifndef std::shared_ptr
-		#define std::shared_ptr boost::shared_ptr
 	#endif
 #endif
 

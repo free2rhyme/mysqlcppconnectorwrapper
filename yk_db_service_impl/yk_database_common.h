@@ -12,15 +12,9 @@
 #include <cppconn/prepared_statement.h>
 #include <cppconn/resultset.h>
 
-#if __cplusplus < 201103L
-	#include <boost/shared_ptr.hpp>
-	#include <boost/thread/mutex.hpp>
-	#include <boost/thread/condition_variable.hpp>
-#else
-	#include <memory>
-	#include <mutex>
-	#include <condition_variable>
-#endif
+#include <memory>
+#include <mutex>
+#include <condition_variable>
 
 typedef sql::Connection                         	NativeCppConnection;
 typedef sql::PreparedStatement                  	NativeCppPreparedStatement;
@@ -40,20 +34,6 @@ typedef NativeResultSet								YKNativeResultSet;
 typedef NativeSQLException							YKSQLException;
 typedef NativeSQLInvalidArgumentException			YKInvalidArgumentException;
 
-#if __cplusplus < 201103L
-	#ifndef std::shared_ptr
-		#define std::shared_ptr 		boost::shared_ptr
-	#endif
-	#ifndef std::mutex
-		#define std::mutex      		boost::mutex
-	#endif
-	#ifndef  std::unique_lock
-		#define std::unique_lock 		boost::unique_lock
-	#endif
-	#ifndef std::condition_variable
-		#define std::condition_variable boost::condition_variable
-	#endif
-#endif
 
 typedef std::shared_ptr<YKCppConnection>          YKCppConnectionShpType;
 typedef std::shared_ptr<YKCppPreparedStatement>   YKCppPreparedStatementShpType;

@@ -31,6 +31,8 @@ public:
 	YKErrorCode set_autoCommit(bool autoCommit)noexcept(true);
 	YKErrorCode set_savepoint(const YKString& name, YKCppSavepointShpType& savepoint_shp)noexcept(true);
 
+	uint32_t get_id() const { return m_connection_id; }
+
 	~YKDatabaseConnection()noexcept(true);
 private:
 	explicit YKDatabaseConnection(YKCppConnectionShpType&)noexcept(true);
@@ -46,6 +48,7 @@ private:
 
 private:
 public:
+	uint32_t					m_connection_id;
 	YKCppConnectionShpType		m_cpp_connection_shp;
 };
 

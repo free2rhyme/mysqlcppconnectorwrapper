@@ -20,7 +20,7 @@ public:
 
 	YKErrorCode init() noexcept(true);
 
-	YKErrorCode prepare_statement(const YKString&, YKPreparedStatementShpType&) noexcept(true);
+	YKErrorCode prepare_statement(bool is_query, const YKString&, YKPreparedStatementShpType&) noexcept(true);
 
 	template <typename...Vargs>
 	static YKErrorCode sql_prepared_statement_query(YKDatabaseResultsetShpType&, const YKString& sql_str, Vargs...vargs) noexcept(true);
@@ -30,7 +30,7 @@ public:
 
 private:
 	template <typename...Vargs>
-	static YKErrorCode create_prepare_statement(const YKString& sql_str, YKPreparedStatementShpType& prepared_statement_shp, Vargs...vargs) noexcept(true);
+	static YKErrorCode create_prepare_statement(bool is_query, const YKString& sql_str, YKPreparedStatementShpType& prepared_statement_shp, Vargs...vargs) noexcept(true);
 
 	template <typename...Vargs>
 	static YKErrorCode begin_setup_prepare_statement(YKPreparedStatementShpType& prepared_statement_shp, Vargs...vargs) noexcept(true);

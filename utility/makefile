@@ -6,12 +6,12 @@ OBJS	:=$(patsubst %.cpp, %.o, $(CPPS))
 DEPS	:=$(patsubst %.cpp, %.d, $(CPPS))
 
 CXX	:=g++
-CPPLAGS	:= -static -g -O0 -std=c++11
-INCLUDE	:= -I$(PROJECT_ROOT)/src/common -I$(PROJECT_ROOT)/src/utility -I$(PROJECT_ROOT)/src/yk_db_service_impl -I$(PROJECT_ROOT)/src 
-LIBS	:= -static -pthread -llctutility -llctcommon -lmysqlclient_r -lmysqlcppconn
+CPPLAGS	:= -g -O0 -std=c++11
+INCLUDE	:= -I$(PROJECT_ROOT)/src/common -I$(PROJECT_ROOT)/src/utility
+LIBS	:= -pthread -llctcommon
 
 RULE	:=all release debugs
-TARGET	:=libykdbservice.a
+TARGET	:=liblctutility.a
 
 CONFIG	:=debug
 

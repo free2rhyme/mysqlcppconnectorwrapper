@@ -15,7 +15,7 @@
 template <typename...Vargs>
 YKErrorCode YKDatabaseHelper::sql_prepared_statement_execute(int32_t& num_rows_affected, const YKString& sql_str, Vargs...vargs) noexcept(true){
 	YKPreparedStatementShpType prepared_statement_shp;
-	YKErrorCode result_code = create_prepare_statement(sql_str, prepared_statement_shp, vargs...);
+	YKErrorCode result_code = create_prepare_statement(false,sql_str, prepared_statement_shp, vargs...);
 	if(result_code != YK_E_SUCCESSFUL){
 		//YKLogError("couldn't create or setup a new prepared_statement");
 		return result_code;
@@ -33,7 +33,7 @@ YKErrorCode YKDatabaseHelper::sql_prepared_statement_execute(int32_t& num_rows_a
 template <typename...Vargs>
 YKErrorCode YKDatabaseHelper::sql_prepared_statement_query(YKDatabaseResultsetShpType& resultset_shp, const YKString& sql_str,Vargs...vargs) noexcept(true){
 	YKPreparedStatementShpType prepared_statement_shp;
-	YKErrorCode result_code = create_prepare_statement(sql_str, prepared_statement_shp, vargs...);
+	YKErrorCode result_code = create_prepare_statement(true, sql_str, prepared_statement_shp, vargs...);
 	if(result_code != YK_E_SUCCESSFUL){
 		//YKLogError("couldn't create or setup a new prepared_statement");
 		return result_code;
@@ -48,9 +48,9 @@ YKErrorCode YKDatabaseHelper::sql_prepared_statement_query(YKDatabaseResultsetSh
 }
 
 template <typename...Vargs>
-YKErrorCode YKDatabaseHelper::create_prepare_statement(const YKString& sql_str, YKPreparedStatementShpType& prepared_statement_shp, Vargs...vargs) noexcept(true){
+YKErrorCode YKDatabaseHelper::create_prepare_statement(bool is_query, const YKString& sql_str, YKPreparedStatementShpType& prepared_statement_shp, Vargs...vargs) noexcept(true){
 
-	YKErrorCode result_code = YKDatabaseHelper::instance().prepare_statement(sql_str, prepared_statement_shp);
+	YKErrorCode result_code = YKDatabaseHelper::instance().prepare_statement(is_query, sql_str, prepared_statement_shp);
 	if(result_code != YK_E_SUCCESSFUL){
 		//YKLogError("couldn't create a new prepared_statement");
 		return result_code;

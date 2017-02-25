@@ -6,12 +6,18 @@
  *       Email: wlc2rhyme@gmail.com
  */
 
+#include <sstream>
 #include "yk_prepared_statement.h"
 #include "yk_database_connection_pool.h"
+#include "yk_prepared_statement_id.h"
 
 YKPreparedStatement::YKPreparedStatement(const YKDatabaseConnectionShpType& db_conn_shp) noexcept(true):
 	m_database_connection_shp(db_conn_shp){
+	m_prepared_statement_id = YKPreparedStatementID::instance().get_next_id();
+	std::stringstream ss;
+	ss << "m_prepared_statement_id(" << m_prepared_statement_id << ")" ;
 
+	YKLogTrace(ss.str());
 }
 
 YKPreparedStatement::~YKPreparedStatement() noexcept(true){
@@ -19,7 +25,14 @@ YKPreparedStatement::~YKPreparedStatement() noexcept(true){
 }
 
 YKErrorCode YKPreparedStatement::prepare_statement(const YKString& sql)noexcept(true){
-	return m_database_connection_shp->prepare_statement(sql, m_native_prepared_statement_shp);
+	if(YK_E_SUCCESSFUL != m_database_connection_shp->prepare_statement(sql, m_native_prepared_statement_shp)){
+		std::stringstream ss;
+		ss << "m_prepared_statement_id(" << m_prepared_statement_id << ") connection(" << m_database_connection_shp->get_id() << ")"; ;
+		YKLogTrace(ss.str());
+		return YK_E_GENERAL_ERROR;
+	} else {
+		return YK_E_SUCCESSFUL;
+	}
 }
 
 YKErrorCode YKPreparedStatement::release_database_connection() noexcept(true){
